@@ -11,8 +11,9 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git credentialsId: 'github-credential', url: 'https://github.com/vinu-kusarige/jenkins-kubernetes-deployment.git'
-      }
+                checkout scmGit(branches: [[name: 'main']], 
+                                userRemoteConfigs: [[url: 'https://github.com/vinu-kusarige/jenkins-kubernetes-deployment']])
+            }
     }
 
     stage('Build image') {
@@ -25,7 +26,7 @@ pipeline {
 
     stage('Pushing Image') {
       environment {
-               registryCredential = 'dockerhub-credentials'
+               registryCredential = 'docker-credential'
            }
       steps{
         script {
